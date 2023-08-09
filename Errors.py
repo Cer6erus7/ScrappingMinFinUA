@@ -1,0 +1,1 @@
+class URLNotWorking(Exception): pass
