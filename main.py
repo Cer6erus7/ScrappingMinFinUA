@@ -3,7 +3,7 @@ from pprint import pprint
 import requests
 import lxml
 from bs4 import BeautifulSoup
-from Errors import URLNotWorking
+from Errors import URLNotWorking, NotEnoughCards
 
 
 HOST = "https://minfin.com.ua/"
@@ -29,14 +29,24 @@ def get_content(html):
              'brand': item.find('div', class_='be80pr-16 be80pr-17 kpDSWu cxzlon').find("a").get("alt"),
              'img_url': item.find('div', class_="be80pr-9 fJFiLL").find("img").get("srcset").split()[2]}
         )
-    return items
+
+    with open('db.json', 'w') as f:
+        json.dump(items, f, indent=2)
 
 def parser():
-    if get_html(URL).status_code == 200:
-        print("OK")
-    else:
-        raise URLNotWorking("This URL doesn't work!")
+    amount = int(input("Write amount of cards - "))
+    count = 0
+    with open("db.json", 'r') as f:
+        cards = json.load(f)
+        if len(cards) < amount:
+            raise NotEnoughCards("There are not many cards!")
+        for card in cards:
+            if count == amount: break
+            print("Card's name: " + card['title'] + "\nBrand's name: " + card["brand"] +
+                  "\nImage_url: " + card["img_url"] + "\nProduct's link: " + card["link_product"] + "\n")
+            count += 1
 
 
 if __name__ == "__main__":
+    get_content(get_html(URL))
     parser()
