@@ -3,11 +3,11 @@ from pprint import pprint
 import requests
 import lxml
 from bs4 import BeautifulSoup
-from Errors import URLNotWorking, NotEnoughCards
+from Errors import NotEnoughCards
 
 
 HOST = "https://minfin.com.ua/"
-URL = "https://minfin.com.ua/cards/"
+URL = "https://minn.com.ua/cards/"
 HEADERS = {
     "Accept": "text/html,application/xhtml+xml,application/xml;q=0.9,image/avif,image/webp,image/apng,*/*;q=0.8,application/signed-exchange;v=b3;q=0.7",
     "User-Agent": "Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/537.36 (KHTML, like Gecko)"
